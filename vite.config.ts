@@ -9,6 +9,9 @@ export default defineConfig({
     tanstackRouter({
       target: "react",
       autoCodeSplitting: true,
+      // Redireciona o cache temporário para dentro de node_modules
+      // para não criar a pasta .tanstack/ na raiz do projeto
+      tmpDir: "./node_modules/.cache/tanstack-router",
     }),
     react(),
     tailwindcss(),

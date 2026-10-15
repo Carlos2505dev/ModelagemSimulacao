@@ -1,12 +1,11 @@
 export type Node =
   | { t: "var"; n: string }
   | { t: "not"; a: Node }
-  | { t: "bin"; op: "and" | "or" | "imp" | "iff" | "xor"; a: Node; b: Node };
+  | { t: "bin"; op: "and" | "or" | "imp" | "iff"; a: Node; b: Node };
 
 const SYM: [RegExp, string][] = [
   [/<->|↔|<=>/y, "iff"],
   [/->|→|=>/y, "imp"],
-  [/⊕/y, "xor"],
   [/\^|∧|&/y, "and"],
   [/∨|\||v(?![a-z])/y, "or"],
   [/~|¬|!/y, "not"],
@@ -35,7 +34,7 @@ export function parse(src: string): Node {
   const tk = tokenize(src.toLowerCase());
   let p = 0;
   const peek = () => tk[p]?.k as string | undefined;
-  const prec: Record<string, number> = { iff: 1, imp: 2, or: 3, xor: 3, and: 4 };
+  const prec: Record<string, number> = { iff: 1, imp: 2, or: 3, and: 4 };
   function unary(): Node {
     const k = peek();
     if (k === "not") { p++; return { t: "not", a: unary() }; }
@@ -45,9 +44,13 @@ export function parse(src: string): Node {
   }
   function expr(min: number): Node {
     let left = unary();
-    while (peek() && prec[peek()!] !== undefined && prec[peek()!] >= min) {
-      const op = peek() as "and" | "or" | "imp" | "iff" | "xor";
-      const pr = prec[op]!;
+    for (;;) {
+      const pk = peek();
+      if (!pk) break;
+      const pv = prec[pk];
+      if (pv === undefined || pv < min) break;
+      const op = pk as "and" | "or" | "imp" | "iff";
+      const pr = pv;
       p++;
       const right = expr(op === "imp" ? pr : pr + 1);
       left = { t: "bin", op, a: left, b: right };
@@ -74,13 +77,12 @@ export function evaluate(n: Node, env: Record<string, boolean>): boolean {
   switch (n.op) {
     case "and": return a && b;
     case "or": return a || b;
-    case "xor": return a !== b;
     case "imp": return !a || b;
     case "iff": return a === b;
   }
 }
 
-const OPS = { and: "∧", or: "∨", imp: "→", iff: "↔", xor: "⊕" };
+const OPS = { and: "∧", or: "∨", imp: "→", iff: "↔" };
 export function show(n: Node, top = true): string {
   if (n.t === "var") return n.n;
   if (n.t === "not") return "¬" + show(n.a, false);

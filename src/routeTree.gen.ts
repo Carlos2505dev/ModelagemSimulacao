@@ -10,14 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AplicacoesRouteImport } from './routes/aplicacoes'
 import { Route as ConjuntosRouteImport } from './routes/conjuntos'
 import { Route as DocumentacaoRouteImport } from './routes/documentacao'
 import { Route as LogicaRouteImport } from './routes/logica'
 import { Route as QuizRouteImport } from './routes/quiz'
+import { Route as SobreRouteImport } from './routes/sobre'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AplicacoesRoute = AplicacoesRouteImport.update({
+  id: '/aplicacoes',
+  path: '/aplicacoes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConjuntosRoute = ConjuntosRouteImport.update({
@@ -40,43 +47,78 @@ const QuizRoute = QuizRouteImport.update({
   path: '/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aplicacoes': typeof AplicacoesRoute
   '/conjuntos': typeof ConjuntosRoute
   '/documentacao': typeof DocumentacaoRoute
   '/logica': typeof LogicaRoute
   '/quiz': typeof QuizRoute
+  '/sobre': typeof SobreRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aplicacoes': typeof AplicacoesRoute
   '/conjuntos': typeof ConjuntosRoute
   '/documentacao': typeof DocumentacaoRoute
   '/logica': typeof LogicaRoute
   '/quiz': typeof QuizRoute
+  '/sobre': typeof SobreRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/aplicacoes': typeof AplicacoesRoute
   '/conjuntos': typeof ConjuntosRoute
   '/documentacao': typeof DocumentacaoRoute
   '/logica': typeof LogicaRoute
   '/quiz': typeof QuizRoute
+  '/sobre': typeof SobreRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/conjuntos' | '/documentacao' | '/logica' | '/quiz'
+  fullPaths:
+    | '/'
+    | '/aplicacoes'
+    | '/conjuntos'
+    | '/documentacao'
+    | '/logica'
+    | '/quiz'
+    | '/sobre'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/conjuntos' | '/documentacao' | '/logica' | '/quiz'
-  id: '__root__' | '/' | '/conjuntos' | '/documentacao' | '/logica' | '/quiz'
+  to:
+    | '/'
+    | '/aplicacoes'
+    | '/conjuntos'
+    | '/documentacao'
+    | '/logica'
+    | '/quiz'
+    | '/sobre'
+  id:
+    | '__root__'
+    | '/'
+    | '/aplicacoes'
+    | '/conjuntos'
+    | '/documentacao'
+    | '/logica'
+    | '/quiz'
+    | '/sobre'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AplicacoesRoute: typeof AplicacoesRoute
   ConjuntosRoute: typeof ConjuntosRoute
   DocumentacaoRoute: typeof DocumentacaoRoute
   LogicaRoute: typeof LogicaRoute
   QuizRoute: typeof QuizRoute
+  SobreRoute: typeof SobreRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -86,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aplicacoes': {
+      id: '/aplicacoes'
+      path: '/aplicacoes'
+      fullPath: '/aplicacoes'
+      preLoaderRoute: typeof AplicacoesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conjuntos': {
@@ -116,15 +165,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuizRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AplicacoesRoute: AplicacoesRoute,
   ConjuntosRoute: ConjuntosRoute,
   DocumentacaoRoute: DocumentacaoRoute,
   LogicaRoute: LogicaRoute,
   QuizRoute: QuizRoute,
+  SobreRoute: SobreRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

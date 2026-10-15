@@ -1,0 +1,33 @@
+FUNCIONALIDADES SUGERIDAS — LogiCo (edicao enraizada no conteudo, rodada 3)
+
+O que o produto e: app educativo React + TanStack Router que ensina Teoria dos Conjuntos e Logica Matematica de forma ludica, com laboratorio Venn, Maquina da Verdade com tradutor PT-BR, simulador de circuitos, banco de 35 questoes com simulado e duelo, paginas Aplicacoes e Sobre, e modo escuro.
+
+1. Verificador de argumentos (premissas provam a conclusao?)
+   O que e: voce escreve as premissas e a conclusao, e o site responde se o argumento e valido, mostrando a linha da tabela que prova ou o contraexemplo que derruba.
+   Por que agora: o modulo de demonstracoes so mostra 3 argumentos prontos; o aluno que quer testar o proprio raciocinio nao tem onde, e validade de argumento e o coracao das tecnicas de demonstracao.
+   Como se encaixa: reaproveita o leitor de formulas e o calculo de tabelas que ja existem; validade vira checar se uma unica formula e tautologia, sem codigo novo de logica.
+
+2. Tabela construida passo a passo
+   O que e: um modo tutorial que revela a tabela coluna por coluna, na ordem em que cada parte e calculada, com botao de proximo ate a coluna final.
+   Por que agora: a tabela pronta cai do ceu e o aluno decora o resultado sem entender a construcao, que e exatamente o que o objetivo 4 da AV3 manda ensinar.
+   Como se encaixa: a lista de subexpressoes em ordem ja e calculada para montar o cabecalho; e so mostrar uma coluna por vez com a animacao que o site ja usa.
+
+3. Venn de 3 conjuntos com inclusao-exclusao
+   O que e: um terceiro conjunto C no laboratorio, com as 7 regioes clicaveis e a conta n(A u B u C) montada na hora somando e descontando as sobreposicoes.
+   Por que agora: tudo no laboratorio para em 2 conjuntos, e a formula de 3 e o exercicio classico que mais confunde; e o proximo passo obvio do diagrama que ja existe.
+   Como se encaixa: reaproveita a leitura de conjuntos e o desenho em SVG, somando um circulo e as regioes que sao combinacoes das que ja existem.
+
+4. Complete as lacunas da tabela
+   O que e: a tabela aparece com algumas celulas vazias e voce preenche V ou F em cada uma, recebendo certo ou errado na hora com a explicacao do conectivo.
+   Por que agora: hoje o aluno so olha a tabela pronta; preencher com a propria mao e o que transforma consulta em aprendizado, e nao existe exercicio assim no site.
+   Como se encaixa: o gabarito de cada celula ja e calculado para exibir a tabela; e so esconder algumas celulas e comparar o palpite com o valor que ja existe.
+
+5. Exportar para o trabalho escrito
+   O que e: botoes para copiar a tabela como texto e baixar o Venn como imagem, prontos para colar no documento escrito que a equipe precisa entregar.
+   Por que agora: a parte escrita vale 2,0 pontos e hoje quem monta um exemplo bonito no app precisa redesenhar tudo a mao no documento; o app deveria alimentar o trabalho, nao competir com ele.
+   Como se encaixa: a tabela ja e texto na pagina (copiar e direto) e o Venn ja e desenho vetorial (salvar como imagem usa recurso nativo do navegador).
+
+6. Galeria de leis logicas demonstraveis
+   O que e: cartoes com cada lei famosa (De Morgan, contrapositiva, condicional como disjuncao) que, ao serem apertados, carregam os dois lados no comparador ja com o veredito.
+   Por que agora: as leis aparecem espalhadas como exemplos soltos; reunidas numa galeria com prova de um clique, viram material de revisao na vespera da apresentacao.
+   Como se encaixa: cada cartao e so um atalho que preenche os dois campos do comparador de equivalencias que ja existe, sem logica nova.

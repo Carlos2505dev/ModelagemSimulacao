@@ -63,12 +63,54 @@
   --grid-line: oklch(0.36 0.12 260 / 7%);
 }
 
+.dark {
+  --background: oklch(0.22 0.05 270);
+  --foreground: oklch(0.9 0.015 85);
+  --card: oklch(0.27 0.055 270);
+  --card-foreground: oklch(0.9 0.015 85);
+  --popover: oklch(0.27 0.055 270);
+  --popover-foreground: oklch(0.9 0.015 85);
+  --primary: oklch(0.88 0.06 85);
+  --primary-foreground: oklch(0.25 0.05 270);
+  --secondary: oklch(0.32 0.055 270);
+  --secondary-foreground: oklch(0.9 0.015 85);
+  --muted: oklch(0.29 0.05 270);
+  --muted-foreground: oklch(0.7 0.03 260);
+  --accent: oklch(0.71 0.17 38);
+  --accent-foreground: oklch(0.27 0.06 265);
+  --destructive: oklch(0.66 0.21 27);
+  --destructive-foreground: oklch(0.98 0.01 85);
+  --success: oklch(0.74 0.15 155);
+  --set-a: oklch(0.66 0.15 250);
+  --set-b: oklch(0.74 0.15 40);
+  --border: oklch(0.42 0.05 265);
+  --input: oklch(0.42 0.05 265);
+  --ring: oklch(0.71 0.17 38);
+  --grid-line: oklch(0.9 0.015 85 / 6%);
+  color-scheme: dark;
+}
+
+/* Lousa: no escuro as sombras duras viram profundidade em vez de neon. */
+.dark .card-ink {
+  box-shadow: 5px 5px 0 rgb(0 0 0 / 0.45);
+}
+.dark .btn-ink {
+  box-shadow: 3px 3px 0 rgb(0 0 0 / 0.45);
+}
+.dark .btn-ink:hover {
+  box-shadow: 4px 4px 0 rgb(0 0 0 / 0.45);
+}
+.dark .btn-ink:active {
+  box-shadow: 1px 1px 0 rgb(0 0 0 / 0.45);
+}
+
 @layer base {
   * { border-color: var(--color-border); }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    transition: background-color 0.25s ease, color 0.25s ease;
     background-image:
       linear-gradient(var(--grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
@@ -100,4 +142,58 @@
   border-radius: var(--radius-md);
   padding: .5rem .75rem; font-family: var(--font-mono);
   &:focus { outline: 3px solid var(--color-accent); outline-offset: 1px; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@utility animate-rise {
+  animation: rise 0.35s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise { animation: none; }
+}
+
+@keyframes cair {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0.5; }
+}
+
+@keyframes tremer {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@utility animate-tremer {
+  animation: tremer 0.4s ease both;
+}
+
+@utility animate-flutuar {
+  animation: flutuar 3s ease-in-out infinite;
+}
+
+.confete {
+  position: absolute;
+  top: -4vh;
+  border-radius: 2px;
+  animation-name: cair;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confete { display: none; }
+  .animate-tremer { animation: none; }
+  .animate-flutuar { animation: none; }
 }

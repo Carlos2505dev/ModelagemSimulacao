@@ -2,6 +2,16 @@
 @source "../src";
 @import "tw-animate-css";
 
+#nprogress .bar {
+  z-index: 50;
+  height: 6px;
+  background: var(--accent);
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--accent), 0 0 5px var(--accent);
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

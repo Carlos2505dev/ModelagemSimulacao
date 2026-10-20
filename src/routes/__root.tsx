@@ -8,6 +8,8 @@ import {
 } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 
 import { reportAppError } from "../lib/error-reporting";
 import { useTheme } from "../hooks/use-theme";
@@ -54,13 +56,32 @@ const NAV = [
   { to: "/aplicacoes", label: "Aplicações" },
   { to: "/quiz", label: "Desafio" },
   { to: "/sobre", label: "Sobre" },
-  // { to: "/documentacao", label: "Documentação" },
+  { to: "/documentacao", label: "Documentação" },
 ] as const;
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
   const { theme, toggle } = useTheme();
   const dark = theme === "dark";
+
+  useEffect(() => {
+    NProgress.configure({ showSpinner: false });
+
+    const unsubscribeStart = router.subscribe("onBeforeNavigate", () => {
+      NProgress.start();
+    });
+    const unsubscribeDone = router.subscribe("onResolved", () => {
+      NProgress.done();
+    });
+
+    return () => {
+      unsubscribeStart();
+      unsubscribeDone();
+      NProgress.done();
+    };
+  }, [router]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <header className="sticky top-0 z-20 border-b-2 border-foreground bg-background/90 backdrop-blur">
